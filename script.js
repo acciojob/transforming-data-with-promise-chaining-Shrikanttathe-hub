@@ -1,23 +1,58 @@
-//your JS code here. If required.
-const output = document.getElementById("output");
+function calculateResult() {
+    const inputNumber = document.getElementById('ip').value;
 
- const btn = document.getElementById('btn');
+    const promise1 = new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(inputNumber);
+        }, 2000);
+    });
 
-btn.addEventListner('click', function(){
-	const inputElement = document.getElementById('ip');
-	cosnt inputValue = inputElement.value;
-   alert("Please enter valid valie:" + inputValue);
-});
-
-function getNumber(Number){
-	return new Promise((resolve, reject)=>{
-		setTimeout(()=>{
-			const result = ip.filter((num)=>num > 0 || num != NAN);
-			output.innerText = result.join("Result:, ");
-			resolve(result);
-			
-		}, 2000);
-	});
+    promise1
+        .then((result) => {
+            printResult(`Result: ${result}`);
+            
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(result * 2);
+                }, 1000);
+            });
+        })
+        .then((result) => {
+            printResult(`Result: ${result}`);
+            
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(result - 3);
+                }, 1000);
+            });
+        })
+        .then((result) => {
+            printResult(`Result: ${result}`);
+            
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(result / 2);
+                }, 1000);
+            });
+        })
+        .then((result) => {
+            printResult(`Result: ${result}`);
+            
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(result + 10);
+                }, 1000);
+            });
+        })
+        .then((finalResult) => {
+            printResult(`Final Result: ${finalResult}`);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 }
 
-getNumber();
+function printResult(message) {
+    const outputDiv = document.getElementById('output');
+    outputDiv.innerHTML += `<p>${message}</p>`;
+}
